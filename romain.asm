@@ -13,7 +13,8 @@ loop:
 
 	li a7, ReadChar
 	ecall
-
+	li t3 , -1
+	beq a0,t3,done
 
 	li t2, 'M'
 	beq a0, t2, isM
