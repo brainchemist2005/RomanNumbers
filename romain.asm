@@ -13,7 +13,8 @@ loop:
     ecall
     li t3, -1
     beq a0, t3, done
-
+    li t5, '\n'
+    
     li t2, 'M'
     beq a0, t2, isM
     li t2, 'D'
@@ -28,6 +29,8 @@ loop:
     beq a0, t2, isV
     li t2, 'I'
     beq a0, t2, isI
+    
+    bne a0,t5,err
     j done
 
 isM:
@@ -54,9 +57,6 @@ isI:
 
 processNumeral:
     lw t2, 0(t1)
-    li a7, PrintInt
-    mv a0,s1
-    ecall
     beq t0, zero, first
     blt t0, t2, subtract
     add s1, s1, t2
@@ -85,9 +85,10 @@ done:
 
 err:
     li a7, PrintString
-    lw a0, error
+    la a0, error
     ecall
-    j done
+    li a7, Exit
+    ecall
 
 .data
 error: .string "err"
